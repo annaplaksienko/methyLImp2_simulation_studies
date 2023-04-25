@@ -22,17 +22,17 @@ colnames(perf_ncores) <- c("ncores", "time_sec", "time_min", "RMSE", "MAE")
 perf_ncores[, 1] <- ncores_vec
 
 #generate NAs
-print("Generating artificial NAs...")
-lambda <- 10
-beta_with_nas <- na_positions <- vector(mode = "list", length = nruns)
-for (i in 1:nruns) {
-  res <- generateMissingData(beta, lambda = lambda)
-  beta_with_nas[[i]] <- res$beta_with_nas
-  na_positions[[i]] <- res$na_positions
-}
-save(list = c("beta", "beta_with_nas", "na_positions"), 
-     file = "beta_for_ncores.Rdata")
-#load("beta_for_ncores.Rdata")
+#print("Generating artificial NAs...")
+#lambda <- 10
+#beta_with_nas <- na_positions <- vector(mode = "list", length = nruns)
+#for (i in 1:nruns) {
+#  res <- generateMissingData(beta, lambda = lambda)
+#  beta_with_nas[[i]] <- res$beta_with_nas
+#  na_positions[[i]] <- res$na_positions
+#}
+#save(list = c("beta", "beta_with_nas", "na_positions"), 
+#     file = "beta_for_ncores.Rdata")
+load("beta_for_ncores.Rdata")
 
 for (i in 1:nruns) {
   timestamp()
@@ -72,5 +72,10 @@ save(list = c("perf_ncores"), file = filename)
 print(perf_ncores)
 
 ggplot(perf_ncores, aes(x = ncores, y = time_min)) +
-  geom_point() +
-  geom_line()
+  geom_point(size = 2) +
+  geom_line(linewidth = 0.8) +
+  scale_x_continuous(breaks = seq(0, 9, by = 1)) +
+  scale_y_continuous(breaks = seq(0, 150, by = 20)) +
+  xlab("Number of cores") + 
+  ylab("Time in minutes") +
+  theme_light(base_size = 16)

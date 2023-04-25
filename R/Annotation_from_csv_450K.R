@@ -4,6 +4,7 @@
 #HumanMethylation450 v1.2 Manifest File (CSV Format).
 #Too big to put on Github
 
+#remember to put the file in your working directory
 data <- read.table("humanmethylation450_15017482_v1-2.csv", 
                    sep = ",", quote = "", col.names = c(1:33), fill = TRUE)
 #move colnames from cells to colnames

@@ -4,6 +4,7 @@
 #Infinium MethylationEPIC v1.0 B5 Manifest File (CSV Format).
 #File is too big to put on Github
 
+#remember to put the file in your working directory
 data <- read.table("infinium-methylationepic-v-1-0-b5-manifest-file.csv", 
                    sep = ",", quote = "", col.names = c(1:52), fill = TRUE)
 
