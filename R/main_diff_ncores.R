@@ -6,7 +6,7 @@ library(ggplot2)
 library(methyLImp2)
 
 #please download the dataset from here
-#https://uio-my.sharepoint.com/:u:/g/personal/annapla_uio_no/ESgSg-uSDJJNnXUSJ8hB3vIBv2cSZROFXp6WQUelomjpYw?e=IjMyT7
+#https://uio-my.sharepoint.com/:u:/g/personal/annapla_uio_no/Ec0RVBJ3HBtKrh316y54DwgBgZq9IumepY0sH9eEvkqctg?e=4NYcpl
 #and add into your folder
 load("68_samples.Rdata")
 ncores <- dim(beta)[1]

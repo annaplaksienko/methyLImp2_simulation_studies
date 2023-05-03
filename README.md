@@ -2,7 +2,7 @@
 This repository contains all the code that I have used for the simulation studies of the _methyLImp2_ paper. However, if something is missing, please don't hesitate to contact me for clarifications.
 
 ## Data
-I have used two datasets for the similation: both EPIC array, one with 68 samples (GSE19905) and another with 456 samples (GSE158063). I have added .R files for how I have downloaded the data from GEO database and filtered some samples and then SNPs and sex chromosomes. If you want to skip that step, you can download .Rdata objects from [here for 68 samples](https://uio-my.sharepoint.com/:u:/g/personal/annapla_uio_no/ESgSg-uSDJJNnXUSJ8hB3vIBv2cSZROFXp6WQUelomjpYw?e=IjMyT7) and [here for 456 samples dataset](https://uio-my.sharepoint.com/:u:/g/personal/annapla_uio_no/ERIX6SObMspBoUKSoj6xKlQByKnnpdn2_qyRTBZdN_YCsA?e=gdwHoQ).
+I have used two datasets for the similation: both EPIC array, one with 68 samples (GSE19905) and another with 456 samples (GSE158063). I have added .R files for how I have downloaded the data from GEO database and filtered some samples and then SNPs and sex chromosomes. If you want to skip that step, you can download .Rdata objects from [here for 68 samples](https://uio-my.sharepoint.com/:u:/g/personal/annapla_uio_no/Ec0RVBJ3HBtKrh316y54DwgBgZq9IumepY0sH9eEvkqctg?e=4NYcpl) and [here for 456 samples dataset](https://uio-my.sharepoint.com/:u:/g/personal/annapla_uio_no/ERIX6SObMspBoUKSoj6xKlQByKnnpdn2_qyRTBZdN_YCsA?e=gdwHoQ).
 
 Same way, I have added .R files describing how to handled 450K and EPIC annotation for the package. Seem them also for links for original files on Illumina website. .Rdata annotation objects are added here and to the package.
 

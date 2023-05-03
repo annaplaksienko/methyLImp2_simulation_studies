@@ -32,5 +32,4 @@ load("annoEPIC.Rdata")
 beta <- beta[rownames(beta) %in% annoEPIC$cpg, ]
 dim(beta)
 
-
-
+beta <- t(beta)
