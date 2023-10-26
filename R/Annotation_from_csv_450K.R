@@ -16,11 +16,9 @@ data <- data.frame(cpg = data$IlmnID, chr = data$CHR)
 dim(data)
 
 unique(data$chr)
+dim(data)
 #drop probes without chromosomes assigned
 data <- data[data$chr != "", ]
-#drop sex chromosomes (since we won't be doing imputations there)
-data <- data[data$chr != "X", ]
-data <- data[data$chr != "Y", ]
 dim(data)
 
 anno450K <- data

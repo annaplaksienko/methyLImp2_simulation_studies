@@ -19,9 +19,6 @@ dim(data)
 unique(data$chr)
 #drop probes without chromosomes assigned
 data <- data[data$chr != "", ]
-#drop sex chromosomes (since we won't be doing imputations there)
-data <- data[data$chr != "X", ]
-data <- data[data$chr != "Y", ]
 dim(data)
 
 annoEPIC <- data
