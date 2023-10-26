@@ -29,21 +29,25 @@ load("beta_for_minibatch.Rdata")
 
 frac_vec <- c(0.1, 0.2, 0.3)
 rep_vec <- c(1, 2, 3)
-perf_minibatch <- matrix(0, nrow = length(frac_vec) * length(rep_vec), ncol = 6)
-colnames(perf_minibatch) <- c("frac", "rep", "time_sec", "time_min", "RMSE", "MAE")
-perf_minibatch[, "frac"] <- rep(frac_vec, each = length(rep_vec))
-perf_minibatch[, "rep"] <- rep(rep_vec, length(frac_vec))
+perf_minibatch <- as.data.frame(matrix(0, nrow = length(frac_vec) * length(rep_vec) * nruns, 
+                         ncol = 7))
+colnames(perf_minibatch) <- c("run", "frac", "rep", 
+                              "time_sec", "time_min", 
+                              "RMSE", "MAE")
+perf_minibatch[, "frac"] <- rep(rep(frac_vec, each = length(rep_vec)), nruns)
+perf_minibatch[, "rep"] <- rep(rep(rep_vec, length(frac_vec)), nruns)
+perf_minibatch[, "run"] <- rep(1:nruns, 
+                               each = length(frac_vec) * length(frac_vec))
 
 print("MINIBATCH")
+ind <- 1
 for (i in 1:nruns) {
   timestamp()
   print(paste0("Run ", i))
   
   curr_data_with_NAs <- beta_with_nas[[i]]
   curr_na_positions <- na_positions[[i]]
-  
-  ind <- 1
-  
+
   for (s in 1:length(frac_vec)) {
     timestamp()
     curr_frac <- frac_vec[s]
@@ -59,30 +63,36 @@ for (i in 1:nruns) {
                                      minibatch_frac = curr_frac,
                                      minibatch_reps = curr_rep)
       })[3]
-      
-      perf_minibatch[ind, "time_sec"] <- perf_minibatch[ind, "time_sec"] + curr_time
+
+      perf_minibatch[ind, "time_sec"] <- curr_time
       
       #performance evaluation
       curr_perf_minibatch <- evaluatePerformance(beta, beta_estimated, 
                                                  curr_na_positions)
-      perf_minibatch[ind, "RMSE"] <- perf_minibatch[ind, "RMSE"] + curr_perf_minibatch["RMSE"]
-      perf_minibatch[ind, "MAE"] <- perf_minibatch[ind, "MAE"] + curr_perf_minibatch["MAE"]
+      perf_minibatch[ind, "RMSE"] <- curr_perf_minibatch["RMSE"]
+      perf_minibatch[ind, "MAE"] <- curr_perf_minibatch["MAE"]
       
       ind <- ind + 1
+
+      save(list = c("perf_minibatch", "ind"), file = filename)
     }
   }
-  
-  save(list = c("perf_minibatch", "i"), file = filename)
+
   gc()
 }
 
-perf_minibatch[ , c("time_sec", "RMSE", "MAE")] <- 
-  perf_minibatch[ , c("time_sec", "RMSE", "MAE")] / nruns
-perf_minibatch <- as.data.frame(perf_minibatch)
 perf_minibatch$time_min <- perf_minibatch$time_sec / 60
-save(list = c("perf_minibatch"), file = filename)
-print(perf_minibatch)
 
+perf_minibatch_mean <- perf_minibatch %>%
+  group_by(frac, rep) %>%
+  summarize(across(time_sec:MAE, mean))
+perf_minibatch_sd <- perf_minibatch %>%
+  group_by(frac, rep) %>%
+  summarize(across(time_sec:MAE, sd))
+
+save(list = c("perf_minibatch", 
+              "perf_minibatch_mean", "perf_minibatch_sd"), 
+     file = filename)
 
 perf_full <- matrix(0, nrow = nruns, ncol = 6)
 colnames(perf_full) <- c("frac", "rep", "time_sec", "time_min", "RMSE", "MAE")
